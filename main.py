@@ -1,3 +1,4 @@
+
 import speech_recognition as sr
 import NetworkServer
 import networktables
@@ -6,9 +7,10 @@ nt = networktables.NetworkTablesInstance.getDefault()
 nt.startClient("127.0.0.1")
 table = nt.getTable("Mic Information")
 
+
 #print(sr.Microphone.list_microphone_names())
 
-micDevice = sr.Microphone(device_index=1) # device number of mic
+micDevice = sr.Microphone(device_index=0) # device number of mic
 r = sr.Recognizer()
 ntTable = NetworkServer.NetworkPublisher(table)
 
@@ -20,6 +22,7 @@ if __name__ == "__main__":
             audio = r.listen(source, phrase_time_limit=2)
         
         directionBasedOnWord = r.recognize_sphinx(audio)
+        
 
         print(directionBasedOnWord)
 
@@ -34,4 +37,6 @@ if __name__ == "__main__":
             changeCount += 1
 
         ntTable.publish_to_network("Times Direction Changed", changeCount)
+        # if keyboard.read_key() == "a":
+        #     break
         
