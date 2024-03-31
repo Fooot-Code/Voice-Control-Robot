@@ -1,3 +1,4 @@
+
 import speech_recognition as sr
 import NetworkServer
 import networktables
@@ -5,6 +6,7 @@ import networktables
 nt = networktables.NetworkTablesInstance.getDefault()
 nt.startClient("127.0.0.1")
 table = nt.getTable("Mic Information")
+
 
 #print(sr.Microphone.list_microphone_names())
 
