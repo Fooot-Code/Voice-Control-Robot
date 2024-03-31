@@ -5,5 +5,6 @@ class NetworkPublisher:
     def __init__(self, table):
         self.table = table
 
-    def publish_to_network(self, command):
-        self.table.putString("Forward Distance", command)
+    def publish_to_network(self, keyName, direction):
+        self.table.putNumber(keyName, direction)
+        

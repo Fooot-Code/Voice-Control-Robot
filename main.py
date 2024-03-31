@@ -10,16 +10,28 @@ table = nt.getTable("Mic Information")
 
 micDevice = sr.Microphone(device_index=1) # device number of mic
 r = sr.Recognizer()
-ntworkTable = NetworkServer.NetworkPublisher(table)
+ntTable = NetworkServer.NetworkPublisher(table)
 
-commandCount = 2
+changeCount = 0
 
 if __name__ == "__main__":
-    for command in range(commandCount):
-        while True:
-            with micDevice as source:
-                audio = r.listen(source, phrase_time_limit=2)
-            
-            print(r.recognize_sphinx(audio))
+    while True:
+        with micDevice as source:
+            audio = r.listen(source, phrase_time_limit=2)
+        
+        directionBasedOnWord = r.recognize_sphinx(audio)
 
-            ntworkTable.publish_to_network(r.recognize_sphinx(audio))
+        print(directionBasedOnWord)
+
+        if directionBasedOnWord == "forward":
+            directionBasedOnWord = 1.0
+            ntTable.publish_to_network("Forward Distance", directionBasedOnWord)
+            changeCount += 1
+
+        elif directionBasedOnWord == "backward":
+            directionBasedOnWord = -1.0
+            ntTable.publish_to_network("Forward Distance", directionBasedOnWord)
+            changeCount += 1
+
+        ntTable.publish_to_network("Times Direction Changed", changeCount)
+        
