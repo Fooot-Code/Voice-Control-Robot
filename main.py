@@ -2,7 +2,6 @@
 import speech_recognition as sr
 import NetworkServer
 import networktables
-import keyboard
 
 nt = networktables.NetworkTablesInstance.getDefault()
 nt.startClient("127.0.0.1")
@@ -38,6 +37,6 @@ if __name__ == "__main__":
             changeCount += 1
 
         ntTable.publish_to_network("Times Direction Changed", changeCount)
-        if keyboard.read_key() == "a":
-            break
+        # if keyboard.read_key() == "a":
+        #     break
         
